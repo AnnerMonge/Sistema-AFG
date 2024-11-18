@@ -15,7 +15,7 @@ public class DataBase {
     
     private final String URL="jdbc:mysql://localhost:3306/sistemaafg";
     private final String user="root";
-    private final String password="carlos3vg6";
+    private final String password="monge123";
     
     
     private Connection conexion; // Para conexión con la BD

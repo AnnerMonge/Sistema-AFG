@@ -24,51 +24,50 @@ public class JFrameProductos extends javax.swing.JFrame {
         jTextIdProducto.setEnabled(false); //Deshabilitar campo de IdProducto
     }
 
-    public void limpiarCampos(){
-       jTextIdProducto.setText("");
-       jTextNombre.setText("");
-       jTextColor.setText(""); 
-       jTextMarca.setText("");
-       jTextPrecio.setText("");
-   }
-    
-    public void obtenerDatos(){
+    public void limpiarCampos() {
+        jTextIdProducto.setText("");
+        jTextNombre.setText("");
+        jTextColor.setText("");
+        jTextMarca.setText("");
+        jTextPrecio.setText("");
+    }
+
+    public void obtenerDatos() {
         //Se crea una lista que almacena los datos obtenidos
-       List<Producto> productos=new DAOProducto().ObtenerDatos();
-       //Define un modelo para la tabla 
-       DefaultTableModel modelo= new DefaultTableModel();
-       //Arreglo con nombre de columnas de la tabla 
-       String[] columnas={"id_producto", "Nombre", "Color", 
-           "Marca", "Precio"};
-       //Establece los nombres definidos de las columnas
-       modelo.setColumnIdentifiers (columnas);
-       for(Producto pro:productos){ //Recorre cada elemento de la lista y los agrega
-           //al modelo de la tabla
-           String[]renglon={Integer.toString(pro.getId_producto()),
-               pro.getNombre(),pro.getColor(), pro.getMarca(),
-              (pro.getPrecio().toString())};
-               modelo.addRow(renglon);
-       }
-       jTableProducto.setModel(modelo); // Ubica los datos del modelo en la tabla 
-   }
-    
-    public void actualizarProducto(){
-       int id=Integer.parseInt(this.jTextIdProducto.getText());
-       String nom=this.jTextNombre.getText();
-       String col=this.jTextColor.getText();
-       String mar=this.jTextMarca.getText();
-       java.math.BigDecimal pre=java.math.BigDecimal.valueOf(Double.parseDouble(this.jTextPrecio.getText()));
-       
-       DAOProducto dao=new DAOProducto();
-       int res=dao.Actualizar(id, nom,col, mar,pre);
-       if(res==1){
-           JOptionPane.showMessageDialog(rootPane, "¡Producto Actualizado!");
-       }
-       else{
-           JOptionPane.showMessageDialog(rootPane, "¡Ocurrió un ERROR!");
-       }
-   }
-    
+        List<Producto> productos = new DAOProducto().ObtenerDatos();
+        //Define un modelo para la tabla 
+        DefaultTableModel modelo = new DefaultTableModel();
+        //Arreglo con nombre de columnas de la tabla 
+        String[] columnas = {"id_producto", "Nombre", "Color",
+            "Marca", "Precio"};
+        //Establece los nombres definidos de las columnas
+        modelo.setColumnIdentifiers(columnas);
+        for (Producto pro : productos) { //Recorre cada elemento de la lista y los agrega
+            //al modelo de la tabla
+            String[] renglon = {Integer.toString(pro.getId_producto()),
+                pro.getNombre(), pro.getColor(), pro.getMarca(),
+                (pro.getPrecio().toString())};
+            modelo.addRow(renglon);
+        }
+        jTableProducto.setModel(modelo); // Ubica los datos del modelo en la tabla 
+    }
+
+    public void actualizarProducto() {
+        int id = Integer.parseInt(this.jTextIdProducto.getText());
+        String nom = this.jTextNombre.getText();
+        String col = this.jTextColor.getText();
+        String mar = this.jTextMarca.getText();
+        java.math.BigDecimal pre = java.math.BigDecimal.valueOf(Double.parseDouble(this.jTextPrecio.getText()));
+
+        DAOProducto dao = new DAOProducto();
+        int res = dao.Actualizar(id, nom, col, mar, pre);
+        if (res == 1) {
+            JOptionPane.showMessageDialog(rootPane, "¡Producto Actualizado!");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "¡Ocurrió un ERROR!");
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -350,20 +349,20 @@ public class JFrameProductos extends javax.swing.JFrame {
 
     private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
         // TODO add your handling code here:
-        String nomb=jTextNombre.getText();
-        String col=jTextColor.getText();
-        String mar=jTextMarca.getText();
-        java.math.BigDecimal pre= java.math.BigDecimal.valueOf(Double.parseDouble(jTextPrecio.getText()));
-        if(nomb.contentEquals("")|| col.contentEquals("")||
-              mar.contentEquals("")||
-                pre==null) {
-            JOptionPane.showMessageDialog(rootPane, 
+        String nomb = jTextNombre.getText();
+        String col = jTextColor.getText();
+        String mar = jTextMarca.getText();
+        java.math.BigDecimal pre = java.math.BigDecimal.valueOf(Double.parseDouble(jTextPrecio.getText()));
+        if (nomb.contentEquals("") || col.contentEquals("")
+                || mar.contentEquals("")
+                || pre == null) {
+            JOptionPane.showMessageDialog(rootPane,
                     "Todos los campos son obligatorios");
-        }else{
-            try{
-                Producto pro=new DAOProducto().Insertar( nomb,col, mar, pre);
+        } else {
+            try {
+                Producto pro = new DAOProducto().Insertar(nomb, col, mar, pre);
                 JOptionPane.showMessageDialog(rootPane, "Registro agregado");
-            }catch  (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(rootPane, "No se agregó el registro");
             }
@@ -374,24 +373,23 @@ public class JFrameProductos extends javax.swing.JFrame {
 
     private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed
         // TODO add your handling code here:
-        int fila=this.jTableProducto.getSelectedRow();
-        if (fila==-1){
+        int fila = this.jTableProducto.getSelectedRow();
+        if (fila == -1) {
             JOptionPane.showMessageDialog(rootPane, "Selecione un registro de la tabla");
-        } 
-        else{
-            try{
-            int id=Integer.parseInt((String)this.jTableProducto.getValueAt(fila, 0).toString());
-            String nom=(String)this.jTableProducto.getValueAt(fila, 1);
-            String col=(String)this.jTableProducto.getValueAt(fila, 2);
-            String mar=(String)this.jTableProducto.getValueAt(fila, 3);
-            String pre=(String)this.jTableProducto.getValueAt(fila, 4);
-            
-            jTextIdProducto.setText(""+id);
-            jTextNombre.setText(nom);
-            jTextColor.setText(col);
-            jTextMarca.setText(mar);
-            jTextPrecio.setText(pre);
-            }catch(NumberFormatException e){
+        } else {
+            try {
+                int id = Integer.parseInt((String) this.jTableProducto.getValueAt(fila, 0).toString());
+                String nom = (String) this.jTableProducto.getValueAt(fila, 1);
+                String col = (String) this.jTableProducto.getValueAt(fila, 2);
+                String mar = (String) this.jTableProducto.getValueAt(fila, 3);
+                String pre = (String) this.jTableProducto.getValueAt(fila, 4);
+
+                jTextIdProducto.setText("" + id);
+                jTextNombre.setText(nom);
+                jTextColor.setText(col);
+                jTextMarca.setText(mar);
+                jTextPrecio.setText(pre);
+            } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
@@ -406,13 +404,12 @@ public class JFrameProductos extends javax.swing.JFrame {
 
     private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
         // TODO add your handling code here:
-        int fila=this.jTableProducto.getSelectedRow();
-        if (fila==-1) {
+        int fila = this.jTableProducto.getSelectedRow();
+        if (fila == -1) {
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro de la tabla");
-        }
-        else{
-            int id=Integer.parseInt((String)this.jTableProducto.getValueAt(fila, 0).toString());
-            DAOProducto dao=new DAOProducto();
+        } else {
+            int id = Integer.parseInt((String) this.jTableProducto.getValueAt(fila, 0).toString());
+            DAOProducto dao = new DAOProducto();
             dao.Eliminar(id);
             obtenerDatos();
         }
@@ -420,6 +417,49 @@ public class JFrameProductos extends javax.swing.JFrame {
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
         // TODO add your handling code here:
+        // Obtiene el texto ingresado en el campo de búsqueda
+        String terminoBusqueda = jTextBuscar.getText().trim();
+
+        // Valida que el campo de búsqueda no esté vacío
+        if (terminoBusqueda.isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Ingrese un término para buscar."); // Muestra un mensaje al usuario si el campo está vacío
+            return; // Finaliza el método
+        }
+
+        try {
+            // Llama al método BuscarProducto en DAOProductos para obtener la lista de productos que coinciden con el término de búsqueda
+            List<Producto> productos = new DAOProducto().BuscarProductos(terminoBusqueda);
+
+            // Valida si hay resultados en la lista de productos
+            if (productos.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "No se encontraron productos con el término: " + terminoBusqueda); // Informa al usuario que no hubo coincidencias
+                return; // Finaliza el método
+            }
+
+            // Crea un modelo para la tabla con las columnas especificadas
+            DefaultTableModel modelo = new DefaultTableModel();
+            String[] columnas = {"id_producto", "nombre", "color", "marca", "precio"};
+            modelo.setColumnIdentifiers(columnas); // Configura los nombres de las columnas en el modelo
+
+            // Itera sobre los productos encontrados y los agrega como filas al modelo
+            for (Producto pro : productos) {
+                String[] renglon = {
+                    Integer.toString(pro.getId_producto()), // Convierte el ID del producto a String
+                    pro.getNombre(), // Obtiene el nombre del producto
+                    pro.getColor(),// Obtiene la descripción del producto
+                    pro.getMarca(),
+                    pro.getPrecio().toString() // Convierte el precio del producto a String
+                };
+                modelo.addRow(renglon); // Agrega la fila al modelo
+            }
+
+            // Actualiza la tabla con el modelo que contiene los datos de los productos encontrados
+            jTableProducto.setModel(modelo);
+
+        } catch (Exception e) {
+            e.printStackTrace(); // Muestra detalles del error en la consola
+            JOptionPane.showMessageDialog(rootPane, "Ocurrió un error al realizar la búsqueda."); // Notifica al usuario sobre el error
+        }
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     /**
