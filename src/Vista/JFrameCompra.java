@@ -1,8 +1,9 @@
-    /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vista;
+
 import Modelo.*;
 import java.awt.HeadlessException;
 import java.util.*;
@@ -22,48 +23,48 @@ public class JFrameCompra extends javax.swing.JFrame {
      */
     public JFrameCompra() {
         initComponents();
-         jTextId_compra.setEnabled(false);
+        jTextId_compra.setEnabled(false);
     }
-      public void limpiarCampos(){
-       jTextId_compra.setText("");
-       jTextfechacompra.setText("");
-       jTextestadocompra.setText(""); 
-       jTextcantidadcompra.setText("");
-       jTextmetodopago.setText("");
-   }
-       public void obtenerDatos(){
-       List<Compra> compras=new DAOCompra().ObtenerDatos();
-       DefaultTableModel modelo= new DefaultTableModel();
-       String[] columnas={"id_compra", "fechacompra", "estadocompra", 
-           "cantidadcompra", "metodopago"};
-       modelo.setColumnIdentifiers (columnas);
-       for(Compra com:compras){
-           String[]renglon={Integer.toString(com.getId_Compra()),
-              (com.getFechacompra().toString()), com.getEstadocompra(), 
-              com.getCantidadcompra().toString(),
-               com.getMetodopago()};
-               modelo.addRow(renglon);
-       }
+
+    public void limpiarCampos() {
+        jTextId_compra.setText("");
+        jTextfechacompra.setText("");
+        jTextestadocompra.setText("");
+        jTextcantidadcompra.setText("");
+        jTextmetodopago.setText("");
+    }
+
+    public void obtenerDatos() {
+        List<Compra> compras = new DAOCompra().ObtenerDatos();
+        DefaultTableModel modelo = new DefaultTableModel();
+        String[] columnas = {"id_compra", "fechacompra", "estadocompra",
+            "cantidadcompra", "metodopago"};
+        modelo.setColumnIdentifiers(columnas);
+        for (Compra com : compras) {
+            String[] renglon = {Integer.toString(com.getId_Compra()),
+                (com.getFechacompra().toString()), com.getEstadocompra(),
+                com.getCantidadcompra().toString(),
+                com.getMetodopago()};
+            modelo.addRow(renglon);
+        }
         jTableCompra.setModel(modelo);
-   }
-        public void actualizarCompra(){
-       int id=Integer.parseInt(this.jTextId_compra.getText());
-       Date fechc=Date.valueOf(this.jTextfechacompra.getText());
-       String estc=this.jTextestadocompra.getText();
-       java.math.BigDecimal cantc=java.math.BigDecimal.valueOf(Double.parseDouble(this.jTextcantidadcompra.getText()));
-       String metp=this.jTextmetodopago.getText();
-       
-       DAOCompra dao=new DAOCompra();
-       int res=dao.Actualizar(id, fechc, estc, cantc, metp);
-       if(res==1){
-           JOptionPane.showMessageDialog(rootPane, "¡Compra Actualizada!");
-       }
-       else{
-           JOptionPane.showMessageDialog(rootPane, "¡Ocurrió un ERROR!");
-       }
-   }
+    }
 
+    public void actualizarCompra() {
+        int id = Integer.parseInt(this.jTextId_compra.getText());
+        Date fechc = Date.valueOf(this.jTextfechacompra.getText());
+        String estc = this.jTextestadocompra.getText();
+        java.math.BigDecimal cantc = java.math.BigDecimal.valueOf(Double.parseDouble(this.jTextcantidadcompra.getText()));
+        String metp = this.jTextmetodopago.getText();
 
+        DAOCompra dao = new DAOCompra();
+        int res = dao.Actualizar(id, fechc, estc, cantc, metp);
+        if (res == 1) {
+            JOptionPane.showMessageDialog(rootPane, "¡Compra Actualizada!");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "¡Ocurrió un ERROR!");
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -101,6 +102,8 @@ public class JFrameCompra extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 153));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Registrar / Actualizar", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -369,22 +372,22 @@ public class JFrameCompra extends javax.swing.JFrame {
 
     private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
         // TODO add your handling code here:
-        Date fechc=Date.valueOf(this.jTextfechacompra.getText());
-        String estc=jTextestadocompra.getText();
-        java.math.BigDecimal cantc=java.math.BigDecimal.valueOf(Double.parseDouble(this.jTextcantidadcompra.getText()));
-        String metp=jTextmetodopago.getText();
-         if(fechc.toString().contentEquals("")||
-            estc.contentEquals("")||
-                 metp.contentEquals("")||
-             cantc==null){
+        Date fechc = Date.valueOf(this.jTextfechacompra.getText());
+        String estc = jTextestadocompra.getText();
+        java.math.BigDecimal cantc = java.math.BigDecimal.valueOf(Double.parseDouble(this.jTextcantidadcompra.getText()));
+        String metp = jTextmetodopago.getText();
+        if (fechc.toString().contentEquals("")
+                || estc.contentEquals("")
+                || metp.contentEquals("")
+                || cantc == null) {
             JOptionPane.showMessageDialog(rootPane,
-                "Todos los campos son obligatorios");
-        }else{
-            try{
+                    "Todos los campos son obligatorios");
+        } else {
+            try {
                 //Date fechcDate= Date.valueOf(fechc);
-                Compra com=new DAOCompra().Insertar(fechc,estc,cantc,metp);
+                Compra com = new DAOCompra().Insertar(fechc, estc, cantc, metp);
                 JOptionPane.showMessageDialog(rootPane, "Registro agregado");
-            }catch  (HeadlessException e){
+            } catch (HeadlessException e) {
                 JOptionPane.showMessageDialog(rootPane, "No se agregó el registro");
             }
         }
@@ -394,24 +397,23 @@ public class JFrameCompra extends javax.swing.JFrame {
 
     private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed
         // TODO add your handling code here:
-        int fila=this.jTableCompra.getSelectedRow();
-        if (fila==-1){
+        int fila = this.jTableCompra.getSelectedRow();
+        if (fila == -1) {
             JOptionPane.showMessageDialog(rootPane, "Selecione un registro de la tabla");
-        }
-        else{
-            try{
-                int id=Integer.parseInt((String)this.jTableCompra.getValueAt(fila, 0).toString());
-                Date fechc=Date.valueOf((String)this.jTableCompra.getValueAt(fila, 1).toString());
-                String estc=(String)this.jTableCompra.getValueAt(fila, 2);
-                Double cantc=Double.valueOf((String)this.jTableCompra.getValueAt(fila, 3).toString());
-                String metp=(String)this.jTableCompra.getValueAt(fila, 4);
+        } else {
+            try {
+                int id = Integer.parseInt((String) this.jTableCompra.getValueAt(fila, 0).toString());
+                Date fechc = Date.valueOf((String) this.jTableCompra.getValueAt(fila, 1).toString());
+                String estc = (String) this.jTableCompra.getValueAt(fila, 2);
+                Double cantc = Double.valueOf((String) this.jTableCompra.getValueAt(fila, 3).toString());
+                String metp = (String) this.jTableCompra.getValueAt(fila, 4);
 
-                jTextId_compra.setText(""+id);
+                jTextId_compra.setText("" + id);
                 jTextfechacompra.setText(String.valueOf(fechc));
                 jTextestadocompra.setText(estc);
                 jTextcantidadcompra.setText(String.valueOf(cantc));
                 jTextmetodopago.setText(metp);
-            }catch(NumberFormatException e){
+            } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
@@ -426,13 +428,12 @@ public class JFrameCompra extends javax.swing.JFrame {
 
     private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
         // TODO add your handling code here:
-        int fila=this.jTableCompra.getSelectedRow();
-        if (fila==-1) {
+        int fila = this.jTableCompra.getSelectedRow();
+        if (fila == -1) {
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro de la tabla");
-        }
-        else{
-            int id=Integer.parseInt((String)this.jTableCompra.getValueAt(fila, 0).toString());
-            DAOCompra dao=new DAOCompra();
+        } else {
+            int id = Integer.parseInt((String) this.jTableCompra.getValueAt(fila, 0).toString());
+            DAOCompra dao = new DAOCompra();
             dao.Eliminar(id);
             obtenerDatos();
         }

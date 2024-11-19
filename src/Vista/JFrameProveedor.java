@@ -11,7 +11,6 @@ import java.sql.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 /**
  *
  * @author yuri guevara
@@ -23,48 +22,46 @@ public class JFrameProveedor extends javax.swing.JFrame {
      */
     public JFrameProveedor() {
         initComponents();
-         jTextIdProveedor.setEnabled(false);
+        jTextIdProveedor.setEnabled(false);
     }
-    
-    public void limpiarCampos(){
-       jTextIdProveedor.setText("");
-       jTextNombre.setText("");
+
+    public void limpiarCampos() {
+        jTextIdProveedor.setText("");
+        jTextNombre.setText("");
         jTextTelefono.setText("");
-       jTextDireccion.setText(""); 
-       jTextEmail.setText("");
-   }
-    
-      public void obtenerDatos(){
-       List<Proveedor> proveedores=new DAOProveedor().ObtenerDatos();
-       DefaultTableModel modelo= new DefaultTableModel();
-       String[] columnas={"id_Proveedor", "Nombre", "Telefono", 
-           "Direccion", "Email"};
-       modelo.setColumnIdentifiers (columnas);
-       for(Proveedor prov:proveedores){
-           String[]renglon={Integer.toString(prov.getId_proveedor()),prov.getNombre(),
-               prov.getTelefono(), prov.getDireccion(), prov.getEmail()};
-               modelo.addRow(renglon);
-       }
-       jTableProveedor.setModel(modelo);
-   }
-      
-       public void actualizarProveedor(){
-       int id=Integer.parseInt(this.jTextIdProveedor.getText());
-       String nom=this.jTextNombre.getText();
-       String dir=this.jTextDireccion.getText();
-       String tel=this.jTextTelefono.getText();
-       String ema=this.jTextEmail.getText();
-   
-       DAOProveedor dao=new DAOProveedor();
-       int res=dao.Actualizar(id, nom, dir, tel, ema);
-       if(res==1){
-           JOptionPane.showMessageDialog(rootPane, "¡Proveedor Actualizado!");
-       }
-       else{
-           JOptionPane.showMessageDialog(rootPane, "¡Ocurrió un ERROR!");
-       }
-   }
-    
+        jTextDireccion.setText("");
+        jTextEmail.setText("");
+    }
+
+    public void obtenerDatos() {
+        List<Proveedor> proveedores = new DAOProveedor().ObtenerDatos();
+        DefaultTableModel modelo = new DefaultTableModel();
+        String[] columnas = {"id_Proveedor", "Nombre", "Telefono",
+            "Direccion", "Email"};
+        modelo.setColumnIdentifiers(columnas);
+        for (Proveedor prov : proveedores) {
+            String[] renglon = {Integer.toString(prov.getId_proveedor()), prov.getNombre(),
+                prov.getTelefono(), prov.getDireccion(), prov.getEmail()};
+            modelo.addRow(renglon);
+        }
+        jTableProveedor.setModel(modelo);
+    }
+
+    public void actualizarProveedor() {
+        int id = Integer.parseInt(this.jTextIdProveedor.getText());
+        String nom = this.jTextNombre.getText();
+        String dir = this.jTextDireccion.getText();
+        String tel = this.jTextTelefono.getText();
+        String ema = this.jTextEmail.getText();
+
+        DAOProveedor dao = new DAOProveedor();
+        int res = dao.Actualizar(id, nom, dir, tel, ema);
+        if (res == 1) {
+            JOptionPane.showMessageDialog(rootPane, "¡Proveedor Actualizado!");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "¡Ocurrió un ERROR!");
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -355,19 +352,19 @@ public class JFrameProveedor extends javax.swing.JFrame {
 
     private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
         // TODO add your handling code here:
-        String nom=jTextNombre.getText();
-        String dir=jTextDireccion.getText();
-        String tel=jTextTelefono.getText();
-        String ema=jTextEmail.getText();
-        if(nom.contentEquals("")|| dir.contentEquals("")||
-            tel.contentEquals("")|| ema.contentEquals ("")){
+        String nom = jTextNombre.getText();
+        String dir = jTextDireccion.getText();
+        String tel = jTextTelefono.getText();
+        String ema = jTextEmail.getText();
+        if (nom.contentEquals("") || dir.contentEquals("")
+                || tel.contentEquals("") || ema.contentEquals("")) {
             JOptionPane.showMessageDialog(rootPane,
-                "Todos los campos son obligatorios");
-        }else{
-            try{
-                Proveedor pro=new DAOProveedor().Insertar(nom, dir, tel, ema);
+                    "Todos los campos son obligatorios");
+        } else {
+            try {
+                Proveedor pro = new DAOProveedor().Insertar(nom, dir, tel, ema);
                 JOptionPane.showMessageDialog(rootPane, "Registro agregado");
-            }catch  (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(rootPane, "No se agregó el registro");
             }
@@ -378,24 +375,23 @@ public class JFrameProveedor extends javax.swing.JFrame {
 
     private void jBEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEditarActionPerformed
         // TODO add your handling code here:
-        int fila=this.jTableProveedor.getSelectedRow();
-        if (fila==-1){
+        int fila = this.jTableProveedor.getSelectedRow();
+        if (fila == -1) {
             JOptionPane.showMessageDialog(rootPane, "Selecione un registro de la tabla");
-        }
-        else{
-            try{
-                int id=Integer.parseInt((String)this.jTableProveedor.getValueAt(fila, 0).toString());
-                String nom=(String)this.jTableProveedor.getValueAt(fila, 1);
-                String dir=(String)this.jTableProveedor.getValueAt(fila, 2);
-                String tel=(String)this.jTableProveedor.getValueAt(fila, 3);
-                String ema=(String)this.jTableProveedor.getValueAt(fila, 4);
+        } else {
+            try {
+                int id = Integer.parseInt((String) this.jTableProveedor.getValueAt(fila, 0).toString());
+                String nom = (String) this.jTableProveedor.getValueAt(fila, 1);
+                String dir = (String) this.jTableProveedor.getValueAt(fila, 2);
+                String tel = (String) this.jTableProveedor.getValueAt(fila, 3);
+                String ema = (String) this.jTableProveedor.getValueAt(fila, 4);
 
-                jTextIdProveedor.setText(""+id);
+                jTextIdProveedor.setText("" + id);
                 jTextNombre.setText(nom);
                 jTextDireccion.setText(dir);
                 jTextTelefono.setText(tel);
                 jTextEmail.setText(ema);
-            }catch(NumberFormatException e){
+            } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
@@ -410,13 +406,12 @@ public class JFrameProveedor extends javax.swing.JFrame {
 
     private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
         // TODO add your handling code here:
-        int fila=this.jTableProveedor.getSelectedRow();
-        if (fila==-1) {
+        int fila = this.jTableProveedor.getSelectedRow();
+        if (fila == -1) {
             JOptionPane.showMessageDialog(rootPane, "Seleccione un registro de la tabla");
-        }
-        else{
-            int id=Integer.parseInt((String)this.jTableProveedor.getValueAt(fila, 0).toString());
-            DAOProducto dao=new DAOProducto();
+        } else {
+            int id = Integer.parseInt((String) this.jTableProveedor.getValueAt(fila, 0).toString());
+            DAOProducto dao = new DAOProducto();
             dao.Eliminar(id);
             obtenerDatos();
         }
@@ -424,6 +419,49 @@ public class JFrameProveedor extends javax.swing.JFrame {
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
         // TODO add your handling code here:
+        // Obtiene el texto ingresado en el campo de búsqueda
+        String terminoBusqueda = jTextBuscar.getText().trim();
+
+        // Valida que el campo de búsqueda no esté vacío
+        if (terminoBusqueda.isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Ingrese un término para buscar."); // Muestra un mensaje al usuario si el campo está vacío
+            return; // Finaliza el método
+        }
+
+        try {
+            // Llama al método BuscarProducto en DAOProductos para obtener la lista de productos que coinciden con el término de búsqueda
+            List<Proveedor> Proveedores = new DAOProveedor().BuscarProveedor(terminoBusqueda);
+
+            // Valida si hay resultados en la lista de productos
+            if (Proveedores.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "No se encontraron productos con el término: " + terminoBusqueda); // Informa al usuario que no hubo coincidencias
+                return; // Finaliza el método
+            }
+
+            // Crea un modelo para la tabla con las columnas especificadas
+            DefaultTableModel modelo = new DefaultTableModel();
+            String[] columnas = {"id", "nombre", "direccion", "telefono", "email"};
+            modelo.setColumnIdentifiers(columnas); // Configura los nombres de las columnas en el modelo
+
+            // Itera sobre los productos encontrados y los agrega como filas al modelo
+            for (Proveedor prove : Proveedores) {
+                String[] renglon = {
+                    Integer.toString(prove.getId_proveedor()), // Convierte el ID del producto a String
+                    prove.getNombre(), // Obtiene el nombre del producto
+                    prove.getDireccion(),// Obtiene la descripción del producto
+                    prove.getTelefono(),
+                    prove.getEmail() // Convierte el precio del producto a String
+                };
+                modelo.addRow(renglon); // Agrega la fila al modelo
+            }
+
+            // Actualiza la tabla con el modelo que contiene los datos de los productos encontrados
+            jTableProveedor.setModel(modelo);
+
+        } catch (Exception e) {
+            e.printStackTrace(); // Muestra detalles del error en la consola
+            JOptionPane.showMessageDialog(rootPane, "Ocurrió un error al realizar la búsqueda."); // Notifica al usuario sobre el error
+        }
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     private void jTextBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextBuscarActionPerformed
