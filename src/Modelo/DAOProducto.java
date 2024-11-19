@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Modelo;
 
 import java.util.*;
@@ -65,29 +61,29 @@ public class DAOProducto {
     }
 
     public List<Producto> BuscarProductos(String nombre) {
-    // Corregir la consulta SQL para incluir el nombre de la tabla
-    String transaccion = "SELECT * FROM Producto WHERE nombre LIKE '%" + nombre + "%'";
+        // Corregir la consulta SQL para incluir el nombre de la tabla
+        String transaccion = "SELECT * FROM Producto WHERE nombre LIKE '%" + nombre + "%'";
 
-    // Llama al método Listar de DataBase.java para ejecutar la consulta
-    List<Map<String, Object>> registros = new DataBase().Listar(transaccion);
+        // Llama al método Listar de DataBase.java para ejecutar la consulta
+        List<Map<String, Object>> registros = new DataBase().Listar(transaccion);
 
-    // Lista para almacenar los productos encontrados
-    List<Producto> productos = new ArrayList<>();
+        // Lista para almacenar los productos encontrados
+        List<Producto> productos = new ArrayList<>();
 
-    // Recorrer los registros devueltos por la consulta y construir objetos Producto
-    for (Map<String, Object> registro : registros) {
-        Producto pro = new Producto(
-                (int) registro.get("id_producto"), // Asegurarse de que coincide con la columna en la tabla
-                (String) registro.get("nombre"),
-                (String) registro.get("color"),
-                (String) registro.get("marca"),
-                (java.math.BigDecimal) registro.get("precio")
-        );
-        productos.add(pro);
+        // Recorrer los registros devueltos por la consulta y construir objetos Producto
+        for (Map<String, Object> registro : registros) {
+            Producto pro = new Producto(
+                    (int) registro.get("id_producto"), // Asegurarse de que coincide con la columna en la tabla
+                    (String) registro.get("nombre"),
+                    (String) registro.get("color"),
+                    (String) registro.get("marca"),
+                    (java.math.BigDecimal) registro.get("precio")
+            );
+            productos.add(pro);
+        }
+
+        // Retornar la lista de productos encontrados
+        return productos;
     }
-
-    // Retornar la lista de productos encontrados
-    return productos;
-}
 
 }
